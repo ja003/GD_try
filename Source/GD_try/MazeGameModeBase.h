@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "FloorActor.h"
+#include "BallActor.h"
+
+
 #include "MazeGameModeBase.generated.h"
 
 /**
@@ -17,5 +20,9 @@ class GD_TRY_API AMazeGameModeBase : public AGameModeBase
 	
 public:
 	AFloorActor* Floor;
+	AGoalActor* Goal;
+	ABallActor* Ball;
+
+	void Restart();
 
 };

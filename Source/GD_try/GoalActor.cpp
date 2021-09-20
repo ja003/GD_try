@@ -3,6 +3,8 @@
 
 #include "GoalActor.h"
 #include "Components/BoxComponent.h"
+#include <GD_try/BallActor.h>
+#include "MazeGameModeBase.h"
 
 // Sets default values
 AGoalActor::AGoalActor()
@@ -27,6 +29,14 @@ AGoalActor::AGoalActor()
 void AGoalActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (mazeGameMode == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid game mode"));
+		return;
+	}
+	mazeGameMode->Goal = this;
 }
 
 void AGoalActor::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
@@ -35,7 +45,12 @@ void AGoalActor::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 		return;
 	if (GEngine)
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, FString::Printf(TEXT("hit: %s"), *OtherActor->GetName()));
-	UE_LOG(LogTemp, Error, TEXT("It's a collision!"));
+
+	if (Cast<ABallActor>(OtherActor)) {
+		UE_LOG(LogTemp, Error, TEXT("It's a collision!"));
+		AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
+		mazeGameMode->Restart();
+	}
 }
 
 // Called every frame

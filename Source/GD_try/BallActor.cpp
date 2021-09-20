@@ -2,6 +2,7 @@
 
 
 #include "BallActor.h"
+#include "MazeGameModeBase.h"
 
 // Sets default values
 ABallActor::ABallActor()
@@ -16,6 +17,13 @@ void ABallActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (mazeGameMode == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid game mode"));
+		return;
+	}
+	mazeGameMode->Ball = this;
 }
 
 // Called every frame
