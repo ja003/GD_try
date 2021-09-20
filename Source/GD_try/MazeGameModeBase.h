@@ -25,4 +25,5 @@ public:
 
 	void Restart();
 
+	void Try();
 };

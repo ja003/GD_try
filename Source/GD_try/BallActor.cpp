@@ -24,6 +24,7 @@ void ABallActor::BeginPlay()
 		return;
 	}
 	mazeGameMode->Ball = this;
+
 }
 
 // Called every frame
