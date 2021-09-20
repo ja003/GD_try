@@ -3,23 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
-#include "FloorCharacter.generated.h"
+#include "GameFramework/Pawn.h"
+#include "MazePawn.generated.h"
 
 UCLASS()
-class GD_TRY_API AFloorCharacter : public ACharacter
+class GD_TRY_API AMazePawn : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	AFloorCharacter();
+	// Sets default values for this pawn's properties
+	AMazePawn();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	void RotateFloorPitch(float Value);
 
-public:	
+	void RotateFloorRoll(float Value);
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

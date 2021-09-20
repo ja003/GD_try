@@ -14,8 +14,9 @@ class GD_TRY_API AFloorActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AFloorActor();
-	void RotateRight(float Value);
+	void RotatePitch(float Value);
 
+	void RotateRoll(float Value);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

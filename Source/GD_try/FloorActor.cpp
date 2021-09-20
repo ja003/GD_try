@@ -13,12 +13,17 @@ AFloorActor::AFloorActor()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void AFloorActor::RotateRight(float Value)
+void AFloorActor::RotatePitch(float Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("RotateRight %f"), Value);
-	FRotator NewRotation = FRotator(Value, 0, 0);
-	FQuat QuatRotation = FQuat(NewRotation);
+	//UE_LOG(LogTemp, Warning, TEXT("RotatePitch %f"), Value);
+	FQuat QuatRotation = FQuat(FRotator(Value, 0, 0));
+	AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+}
 
+void AFloorActor::RotateRoll(float Value)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("RotateRoll %f"), Value);
+	FQuat QuatRotation = FQuat(FRotator(0, 0, Value));
 	AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 }
 
