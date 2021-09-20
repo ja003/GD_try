@@ -4,25 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include <GD_try/GoalActor.h>
-
-#include "FloorActor.generated.h"
+#include "BallActor.generated.h"
 
 UCLASS()
-class GD_TRY_API AFloorActor : public AActor
+class GD_TRY_API ABallActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AFloorActor();
-	void RotatePitch(float Value);
+	ABallActor();
 
-	void RotateRoll(float Value);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 
 public:	
 	// Called every frame
