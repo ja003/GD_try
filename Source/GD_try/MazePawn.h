@@ -23,6 +23,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void LookRight(float Value);
+	void LookUp(float Value);
+
 	void RotateFloorPitch(float Value);
 
 	void RotateFloorRoll(float Value);

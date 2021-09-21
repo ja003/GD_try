@@ -48,6 +48,10 @@ void AMazePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	InputComponent->BindAxis("RotatePitch", this, &AMazePawn::RotateFloorPitch);
 	InputComponent->BindAxis("RotateRoll", this, &AMazePawn::RotateFloorRoll);
+
+	InputComponent->BindAxis("LookUp", this, &AMazePawn::LookUp);
+	InputComponent->BindAxis("LookRight", this, &AMazePawn::LookRight);
+
 }
 
 void AMazePawn::OnGoalHit()
@@ -56,14 +60,29 @@ void AMazePawn::OnGoalHit()
 	OnScoreChanged.Broadcast(playerState->GetScore());
 }
 
-void AMazePawn::RotateFloorPitch(float Value) {
+void AMazePawn::LookUp(float Value)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("LookUp %f"), Value);
+	FQuat QuatRotation = FQuat(FRotator(Value, 0, 0));
+	AddActorLocalRotation(QuatRotation);
+}
 
+void AMazePawn::LookRight(float Value)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("LookRight %f"), Value);
+	FQuat QuatRotation = FQuat(FRotator(0, Value, 0));
+	AddActorLocalRotation(QuatRotation);
+}
+
+
+void AMazePawn::RotateFloorPitch(float Value) 
+{
 	AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
 	mazeGameMode->Floor->RotatePitch(Value);
 }
 
-void AMazePawn::RotateFloorRoll(float Value) {
-
+void AMazePawn::RotateFloorRoll(float Value) 
+{
 	AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
 	mazeGameMode->Floor->RotateRoll(Value);
 }
