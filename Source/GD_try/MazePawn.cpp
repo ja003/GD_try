@@ -4,6 +4,7 @@
 #include "MazePawn.h"
 #include <GD_try/MazeGameModeBase.h>
 #include "Kismet/GameplayStatics.h"
+#include "MazePlayerState.h"
 
 // Sets default values
 AMazePawn::AMazePawn()
@@ -17,7 +18,21 @@ AMazePawn::AMazePawn()
 void AMazePawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (mazeGameMode == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid game mode"));
+		return;
+	}
+	mazeGameMode->MazePawn = this;
+
+	playerState = Cast<AMazePlayerState>(GetPlayerState());
+	if (playerState == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid player state"));
+		return;
+	}
+
 }
 
 // Called every frame
@@ -33,6 +48,11 @@ void AMazePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	InputComponent->BindAxis("RotatePitch", this, &AMazePawn::RotateFloorPitch);
 	InputComponent->BindAxis("RotateRoll", this, &AMazePawn::RotateFloorRoll);
+}
+
+void AMazePawn::OnGoalHit()
+{
+	playerState->SetScore(playerState->GetScore() + 1);
 }
 
 void AMazePawn::RotateFloorPitch(float Value) {

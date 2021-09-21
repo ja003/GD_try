@@ -54,7 +54,7 @@ void AGoalActor::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 		UE_LOG(LogTemp, Error, TEXT("It's a collision!"));
 		IsActive = false;
 		AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
-		mazeGameMode->Restart();
+		mazeGameMode->OnGoalHit();
 	}
 }
 
