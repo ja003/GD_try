@@ -53,6 +53,7 @@ void AMazePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AMazePawn::OnGoalHit()
 {
 	playerState->SetScore(playerState->GetScore() + 1);
+	OnScoreChanged.Broadcast(playerState->GetScore());
 }
 
 void AMazePawn::RotateFloorPitch(float Value) {

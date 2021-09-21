@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "MazePawn.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChanged, float, Score);
+
 UCLASS()
 class GD_TRY_API AMazePawn : public APawn
 {
@@ -14,6 +16,9 @@ class GD_TRY_API AMazePawn : public APawn
 public:
 	// Sets default values for this pawn's properties
 	AMazePawn();
+
+	UPROPERTY(BlueprintAssignable, Category = "Test")
+	FOnScoreChanged OnScoreChanged;
 
 protected:
 	// Called when the game starts or when spawned
