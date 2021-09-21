@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "FloorActor.h"
 #include "BallActor.h"
+#include "MazePawn.h"
 
 
 #include "MazeGameModeBase.generated.h"
@@ -22,8 +23,10 @@ public:
 	AFloorActor* Floor;
 	AGoalActor* Goal;
 	ABallActor* Ball;
+	AMazePawn* MazePawn;
 
-	void Restart();
+	void OnGoalHit();
 
 	void Try();
+
 };

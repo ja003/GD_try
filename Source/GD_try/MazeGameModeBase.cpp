@@ -4,7 +4,7 @@
 #include "MazeGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
-void AMazeGameModeBase::Restart()
+void AMazeGameModeBase::OnGoalHit()
 {
 	//UGameplayStatics::OpenLevel(GetWorld(), "L_Maze");
 	FVector origin;
@@ -15,14 +15,17 @@ void AMazeGameModeBase::Restart()
 	float topLeftY = origin.Y - extents.Y / 2 - offset;
 	float botRightX = origin.X + extents.X / 2 - offset;
 	float botRightY = origin.Y + extents.Y / 2 + offset;
+	UE_LOG(LogTemp, Error, TEXT("Restart"));
 
 	Goal->SetActorLocation(FVector(FMath::RandRange(topLeftX, botRightX), FMath::RandRange(topLeftY, botRightY), 0));
 	FTimerHandle UnusedHandle;
 	GetWorldTimerManager().SetTimer(UnusedHandle, this, &AMazeGameModeBase::Try, 1, false);
+	MazePawn->OnGoalHit();
 }
 
 void AMazeGameModeBase::Try() {
 
+	Goal->IsActive = true;
 	UE_LOG(LogTemp, Error, TEXT("Try"));
 	Ball->SetActorLocation(FVector(0, 0, 100)); //this doesnt happen!
 	Ball->Reset();

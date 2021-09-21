@@ -37,6 +37,7 @@ void AGoalActor::BeginPlay()
 		return;
 	}
 	mazeGameMode->Goal = this;
+	IsActive = true;
 }
 
 void AGoalActor::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
@@ -46,10 +47,14 @@ void AGoalActor::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 	if (GEngine)
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, FString::Printf(TEXT("hit: %s"), *OtherActor->GetName()));
 
+	if (!IsActive)
+		return;
+
 	if (Cast<ABallActor>(OtherActor)) {
 		UE_LOG(LogTemp, Error, TEXT("It's a collision!"));
+		IsActive = false;
 		AMazeGameModeBase* mazeGameMode = Cast<AMazeGameModeBase>(GetWorld()->GetAuthGameMode());
-		mazeGameMode->Restart();
+		mazeGameMode->OnGoalHit();
 	}
 }
 
